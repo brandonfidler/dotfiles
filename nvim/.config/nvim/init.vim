@@ -36,10 +36,18 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'gruvbox-community/gruvbox'
 Plug 'tpope/vim-fugitive'
 Plug 'rafamadriz/friendly-snippets'
-Plug 'vim-airline/vim-airline'
+"status bar
+Plug 'hoob3rt/lualine.nvim'
+
 Plug 'stsewd/fzf-checkout.vim'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf',{ 'do': {->fzf#install()}}
+"Javascript Plugins
+Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+Plug 'jparise/vim-graphql'
 call plug#end()
 
 let g:fzf_layout = { 'window': {'width': 0.8, 'height': 0.8 }}
