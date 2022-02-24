@@ -30,12 +30,16 @@ set updatetime=50
 set shortmess+=c
 
 call plug#begin('~/.vim/plugged')
+"telescope
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
-Plug 'gruvbox-community/gruvbox'
-Plug 'tpope/vim-fugitive'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
+"Snippets
 Plug 'rafamadriz/friendly-snippets'
+Plug 'nvim-lua/completion-nvim'
+"git
+Plug 'tpope/vim-fugitive'
 "status bar
 Plug 'hoob3rt/lualine.nvim'
 
@@ -48,6 +52,8 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
+"colorscheme
+Plug 'gruvbox-community/gruvbox'
 call plug#end()
 
 let g:fzf_layout = { 'window': {'width': 0.8, 'height': 0.8 }}
@@ -95,6 +101,6 @@ nmap <leader>gs :G<CR>
 
 "it worked
 
-" a change
+"a change
 
 
