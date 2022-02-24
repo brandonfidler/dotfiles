@@ -36,10 +36,17 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'gruvbox-community/gruvbox'
 Plug 'tpope/vim-fugitive'
 Plug 'rafamadriz/friendly-snippets'
+Plug 'vim-airline/vim-airline'
+Plug 'stsewd/fzf-checkout.vim'
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf',{ 'do': {->fzf#install()}}
 call plug#end()
 
+let g:fzf_layout = { 'window': {'width': 0.8, 'height': 0.8 }}
+let $FZF_DEFAULT_OPTS='--reverse'
+
 colorscheme gruvbox
-highlight Normal guibg=none
+set background=dark
 
 let mapleader = " "
 nnoremap <leader>ps :lua require('telescope.builtin').grep_string({search = vim.fn.input("Grep for > ")})<CR>
@@ -67,5 +74,15 @@ nnoremap <leader>k :m .-2<CR>==
 
 nnoremap <leader>x :!chmod +x %<CR>
 nnoremap <silent> <C-f> :silent !tmux neww tmux-sessionizer<CR>
-nnoremap <leader>k :cnext<CR>
-nnoremap <leader>j :cprev<CR>
+nnoremap <leader>K :cnext<CR>
+nnoremap <leader>J :cprev<CR>
+
+nnoremap <leader>gc :GBranches<CR>
+nnoremap <leader>gn :GBranches create<CR>
+nnoremap <leader>gf :Git fetch<CR>
+nnoremap <leader>gp :Git pull<CR>
+nmap <leader>gj :diffget //3<CR>
+nmap <leader>gf :diffget //2<CR>
+nmap <leader>gs :G<CR>
+
+
