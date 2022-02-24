@@ -80,7 +80,6 @@ nnoremap <leader>J :cprev<CR>
 nnoremap <leader>gc :GBranches<CR>
 nnoremap <leader>gn :GBranches create<CR>
 nnoremap <leader>gf :Git fetch<CR>
-nnoremap <leader>gp :Git pull<CR>
 nmap <leader>gj :diffget //3<CR>
 nmap <leader>gf :diffget //2<CR>
 nmap <leader>gs :G<CR>
