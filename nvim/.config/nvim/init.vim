@@ -85,7 +85,8 @@ nnoremap <silent> <C-f> :silent !tmux neww tmux-sessionizer<CR>
 nnoremap <leader>K :cnext<CR>
 nnoremap <leader>J :cprev<CR>
 
-nnoremap <leader>gc :GBranches<CR>
+nnoremap <leader>gb :GBranches<CR>
+nnoremap <leader>gc :GBranches checkout<CR>
 nnoremap <leader>gn :GBranches create<CR>
 nnoremap <leader>gf :Git fetch<CR>
 nmap <leader>gj :diffget //3<CR>
