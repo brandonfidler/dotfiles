@@ -36,6 +36,7 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 "Snippets
+"see later which ones are REQUIRED
 Plug 'rafamadriz/friendly-snippets'
 Plug 'nvim-lua/completion-nvim'
 Plug 'neovim/nvim-lspconfig'
@@ -51,17 +52,21 @@ Plug 'hrsh7th/vim-vsnip'
 "git
 Plug 'tpope/vim-fugitive'
 "status bar
-Plug 'hoob3rt/lualine.nvim'
-
+"Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
+"Plug 'kyazdani42/nvim-web-devicons' " lua
+"Plug 'hoob3rt/lualine.nvim'
+Plug 'vim-airline/vim-airline'
+"fzf
 Plug 'stsewd/fzf-checkout.vim'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf',{ 'do': {->fzf#install()}}
 "Javascript Plugins
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'peitalin/vim-jsx-typescript'
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-Plug 'jparise/vim-graphql'
+"see later if i need this
+"Plug 'pangloss/vim-javascript'
+"Plug 'leafgarland/typescript-vim'
+"Plug 'peitalin/vim-jsx-typescript'
+"Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+"Plug 'jparise/vim-graphql'
 "colorscheme
 Plug 'gruvbox-community/gruvbox'
 call plug#end()
@@ -93,13 +98,11 @@ vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 inoremap <C-j> :m .+1<CR>==
 inoremap <C-k> :m .-2<CR>==
-nnoremap <leader>j :m .+1<CR>==
-nnoremap <leader>k :m .-2<CR>==
 
 nnoremap <leader>x :!chmod +x %<CR>
 nnoremap <silent> <C-f> :silent !tmux neww tmux-sessionizer<CR>
-nnoremap <leader>K :cnext<CR>
-nnoremap <leader>J :cprev<CR>
+nnoremap <leader>k :cnext<CR>
+nnoremap <leader>j :cprev<CR>
 
 nnoremap <leader>gb :GBranches<CR>
 nnoremap <leader>gc :GBranches checkout<CR>
@@ -109,9 +112,13 @@ nmap <leader>gj :diffget //3<CR>
 nmap <leader>gf :diffget //2<CR>
 nmap <leader>gs :G<CR>
 
-"it worked
-
-"a change
+" LSP config (the mappings used in the default file don't quite work right)
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 
 lua <<EOF
   -- Setup nvim-cmp.
@@ -181,4 +188,3 @@ lua <<EOF
     capabilities = capabilities
   }
 EOF
-
