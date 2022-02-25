@@ -9,7 +9,6 @@ set tabstop=4 softtabstop=4
 set shiftwidth=4
 set expandtab
 set smartindent
-set nowrap
 set smartcase
 set noswapfile
 set nobackup
@@ -70,6 +69,9 @@ Plug 'junegunn/fzf',{ 'do': {->fzf#install()}}
 "Plug 'jparise/vim-graphql'
 "colorscheme
 Plug 'gruvbox-community/gruvbox'
+"Prettier
+Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
+Plug 'tpope/vim-commentary'
 call plug#end()
 
 let g:fzf_layout = { 'window': {'width': 0.8, 'height': 0.8 }}
@@ -192,6 +194,9 @@ lua <<EOF
     capabilities = capabilities
   }
   require('lspconfig')['cssls'].setup {
+    capabilities = capabilities
+  }
+  require('lspconfig')['html'].setup {
     capabilities = capabilities
   }
 EOF
