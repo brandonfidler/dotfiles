@@ -1,3 +1,7 @@
+set path+=**
+set wildmenu
+
+set nowrap
 set exrc
 set guicursor=
 set relativenumber
@@ -72,7 +76,15 @@ Plug 'gruvbox-community/gruvbox'
 "Prettier
 Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
+Plug 'rhysd/vim-grammarous'
+
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'github/copilot.vim'
+Plug 'ThePrimeagen/git-worktree.nvim'
 call plug#end()
+
 
 let g:fzf_layout = { 'window': {'width': 0.8, 'height': 0.8 }}
 let $FZF_DEFAULT_OPTS='--reverse'
@@ -122,6 +134,8 @@ nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <leader>F :Telescope live_grep<CR>
+nnoremap <leader>; :lua require('telescope').extensions.git_worktree.git_worktrees()<CR>
 
 lua <<EOF
   -- Setup nvim-cmp.
@@ -186,6 +200,7 @@ lua <<EOF
 
   -- Setup lspconfig.
   local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
   -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
   require('lspconfig')['tsserver'].setup {
     capabilities = capabilities
@@ -199,4 +214,8 @@ lua <<EOF
   require('lspconfig')['html'].setup {
     capabilities = capabilities
   }
+  require('lspconfig')['tailwindcss'].setup {
+    capabilities = capabilities
+  }
+  require("telescope").load_extension("git_worktree")
 EOF
