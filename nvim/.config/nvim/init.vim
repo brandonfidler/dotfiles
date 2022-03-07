@@ -40,7 +40,10 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 "Snippets
 "see later which ones are REQUIRED
+Plug 'L3MON4D3/LuaSnip'
 Plug 'rafamadriz/friendly-snippets'
+Plug 'nvim-lua/lsp_extensions.nvim'
+
 Plug 'nvim-lua/completion-nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
@@ -55,6 +58,9 @@ Plug 'hrsh7th/vim-vsnip'
 "git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'ThePrimeagen/git-worktree.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'github/copilot.vim'
 "status bar
 "Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
 "Plug 'kyazdani42/nvim-web-devicons' " lua
@@ -74,15 +80,13 @@ Plug 'junegunn/fzf',{ 'do': {->fzf#install()}}
 "colorscheme
 Plug 'gruvbox-community/gruvbox'
 "Prettier
-Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
+" Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
+Plug 'sbdchd/neoformat'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'rhysd/vim-grammarous'
 
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'github/copilot.vim'
-Plug 'ThePrimeagen/git-worktree.nvim'
 call plug#end()
 
 
@@ -94,8 +98,8 @@ set background=dark
 
 let mapleader = " "
 nnoremap <leader>ps :lua require('telescope.builtin').grep_string({search = vim.fn.input("Grep for > ")})<CR>
-nnoremap <C-p> :lua require('telescope.builtin').git_files()<CR>
-nnoremap <Leader>pf :lua require('telescope.builtin').find_files()<CR>
+nnoremap <C-p> :lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown({winblend = 5}))<cr>
+nnoremap <Leader>pf :lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown({}))<CR>
 
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -136,7 +140,6 @@ nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <leader>F :Telescope live_grep<CR>
 nnoremap <leader>; :lua require('telescope').extensions.git_worktree.git_worktrees()<CR>
-
 lua <<EOF
   -- Setup nvim-cmp.
   local cmp = require'cmp'
@@ -164,8 +167,8 @@ lua <<EOF
     },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-      { name = 'vsnip' }, -- For vsnip users.
-      -- { name = 'luasnip' }, -- For luasnip users.
+      -- { name = 'vsnip' }, -- For vsnip users.
+      { name = 'luasnip' }, -- For luasnip users.
       -- { name = 'ultisnips' }, -- For ultisnips users.
       -- { name = 'snippy' }, -- For snippy users.
     }, {
@@ -219,3 +222,8 @@ lua <<EOF
   }
   require("telescope").load_extension("git_worktree")
 EOF
+
+augroup fmt
+  autocmd!
+  autocmd BufWritePre * undojoin | Neoformat
+augroup END
