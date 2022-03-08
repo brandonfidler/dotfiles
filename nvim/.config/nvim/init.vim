@@ -20,7 +20,7 @@ set undodir=~/.vim/undodir
 set undofile
 set incsearch
 set termguicolors
-set scrolloff=8
+set scrolloff=15
 set noshowmode
 set completeopt=menuone,noinsert,noselect
 set colorcolumn=80
@@ -31,70 +31,92 @@ set cmdheight=2
 set updatetime=50
 
 set shortmess+=c
+set encoding=UTF-8
 
 call plug#begin('~/.vim/plugged')
 "telescope
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzy-native.nvim'
+    Plug 'nvim-lua/popup.nvim'
+    Plug 'nvim-lua/plenary.nvim'
+    Plug 'nvim-telescope/telescope.nvim'
+    Plug 'nvim-telescope/telescope-fzy-native.nvim'
 "Snippets
 "see later which ones are REQUIRED
-Plug 'L3MON4D3/LuaSnip'
-Plug 'rafamadriz/friendly-snippets'
-Plug 'nvim-lua/lsp_extensions.nvim'
+" Plug 'nvim-lua/lsp_extensions.nvim'
+" Plug 'nvim-lua/completion-nvim'
 
-Plug 'nvim-lua/completion-nvim'
-Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-compe'
-Plug 'hrsh7th/cmp-cmdline'
-Plug 'hrsh7th/cmp-path'
-Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'hrsh7th/cmp-buffer'
-Plug 'hrsh7th/nvim-cmp'
-Plug 'tzachar/cmp-tabnine', { 'do': './install.sh' }
-Plug 'hrsh7th/cmp-vsnip'
-Plug 'hrsh7th/vim-vsnip'
+    Plug 'neovim/nvim-lspconfig'
+    Plug 'hrsh7th/nvim-compe'
+    Plug 'hrsh7th/cmp-cmdline'
+    Plug 'hrsh7th/cmp-path'
+    Plug 'hrsh7th/cmp-nvim-lsp'
+    Plug 'hrsh7th/cmp-buffer'
+    Plug 'hrsh7th/nvim-cmp'
+
+" For luasnip users.
+    Plug 'L3MON4D3/LuaSnip'
+    Plug 'rafamadriz/friendly-snippets'
+    Plug 'saadparwaiz1/cmp_luasnip'
+
 "git
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'ThePrimeagen/git-worktree.nvim'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
-Plug 'github/copilot.vim'
+    Plug 'tpope/vim-fugitive'
+    Plug 'airblade/vim-gitgutter'
+    Plug 'ThePrimeagen/git-worktree.nvim'
+    Plug 'ThePrimeagen/refactoring.nvim'
+    Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+    Plug 'github/copilot.vim'
+
 "status bar
-"Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
-"Plug 'kyazdani42/nvim-web-devicons' " lua
-"Plug 'hoob3rt/lualine.nvim'
-Plug 'vim-airline/vim-airline'
+    Plug 'hoob3rt/lualine.nvim'
+    Plug 'kyazdani42/nvim-web-devicons' " lua
+
 "fzf
-Plug 'stsewd/fzf-checkout.vim'
-Plug 'junegunn/fzf.vim'
-Plug 'junegunn/fzf',{ 'do': {->fzf#install()}}
-"Javascript Plugins
-"see later if i need this
-"Plug 'pangloss/vim-javascript'
-"Plug 'leafgarland/typescript-vim'
-"Plug 'peitalin/vim-jsx-typescript'
-"Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-"Plug 'jparise/vim-graphql'
+    Plug 'stsewd/fzf-checkout.vim'
+    Plug 'junegunn/fzf.vim'
+    Plug 'junegunn/fzf',{ 'do': {->fzf#install()}}
+
 "colorscheme
-Plug 'gruvbox-community/gruvbox'
+    Plug 'gruvbox-community/gruvbox'
+
 "Prettier
-" Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
-Plug 'sbdchd/neoformat'
-Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-repeat'
-Plug 'rhysd/vim-grammarous'
+    Plug 'prettier/vim-prettier', { 'do': 'yarn install --frozen-lockfile --production' }
+    Plug 'sbdchd/neoformat'
 
+"tpope plugins
+    Plug 'tpope/vim-commentary'
+    Plug 'tpope/vim-surround'
+    Plug 'tpope/vim-repeat'
+
+    Plug 'rhysd/vim-grammarous'
+
+    Plug 'tomlion/vim-solidity'
+
+    Plug 'onsails/lspkind-nvim'
+
+    Plug 'ryanoasis/vim-devicons'
 call plug#end()
-
 
 let g:fzf_layout = { 'window': {'width': 0.8, 'height': 0.8 }}
 let $FZF_DEFAULT_OPTS='--reverse'
 
-colorscheme gruvbox
-set background=dark
+"***********COLORS THEME *************
+    let g:gruvbox_contrast_dark = 'hard'
+    if exists('+termguicolors')
+            let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+            let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+        endif
+    colorscheme gruvbox
+    set background=dark
+    highlight ColorColumn ctermbg=0 guibg=grey
+    hi SignColumn guibg=none
+    hi CursorLineNR guibg=None
+    highlight Normal guibg=none
+    " highlight LineNr guifg=#ff8659
+    " highlight LineNr guifg=#aed75f
+    highlight LineNr guifg=#5eacd3
+    highlight netrwDir guifg=#5eacd3
+    highlight qfFileName guifg=#aed75f
+    hi TelescopeBorder guifg=#5eacd
+"***********END COLOR THEME *************
 
 let mapleader = " "
 nnoremap <leader>ps :lua require('telescope.builtin').grep_string({search = vim.fn.input("Grep for > ")})<CR>
@@ -117,6 +139,12 @@ vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 inoremap <C-j> :m .+1<CR>==
 inoremap <C-k> :m .-2<CR>==
+inoremap <silent>' ''<left>
+inoremap <silent>" ""<left>
+inoremap <silent>` ``<left>
+inoremap <silent>( ()<left>
+inoremap <silent>[ []<left>
+inoremap <silent>{ {}<left>
 
 nnoremap <leader>x :!chmod +x %<CR>
 nnoremap <silent> <C-f> :silent !tmux neww tmux-sessionizer<CR>
@@ -130,7 +158,6 @@ nnoremap <leader>gf :Git fetch<CR>
 nmap <leader>gj :diffget //3<CR>
 nmap <leader>gf :diffget //2<CR>
 nmap <leader>gs :G<CR>
-
 " LSP config (the mappings used in the default file don't quite work right)
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
@@ -140,6 +167,14 @@ nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <leader>F :Telescope live_grep<CR>
 nnoremap <leader>; :lua require('telescope').extensions.git_worktree.git_worktrees()<CR>
+nnoremap vr gd[{V%::s/<C-R>///gc<left><left><left>
+nnoremap vR gD:%s/<C-R>///gc<left><left><left>
+
+augroup fmt
+    autocmd!
+    autocmd BufWritePre * undojoin | Neoformat
+augroup END
+
 lua <<EOF
   -- Setup nvim-cmp.
   local cmp = require'cmp'
@@ -148,8 +183,8 @@ lua <<EOF
     snippet = {
       -- REQUIRED - you must specify a snippet engine
       expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+         require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
         -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
         -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
       end,
@@ -163,13 +198,13 @@ lua <<EOF
         i = cmp.mapping.abort(),
         c = cmp.mapping.close(),
       }),
-      ['<TAB>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     },
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
-      -- { name = 'vsnip' }, -- For vsnip users.
-      { name = 'luasnip' }, -- For luasnip users.
-      -- { name = 'ultisnips' }, -- For ultisnips users.
+     -- { name = 'vsnip' }, -- For vsnip users.
+       { name = 'luasnip' }, -- For luasnip users.
+       --{ name = 'ultisnips' }, -- For ultisnips users.
       -- { name = 'snippy' }, -- For snippy users.
     }, {
       { name = 'buffer' },
@@ -201,6 +236,17 @@ lua <<EOF
     })
   })
 
+
+local lspkind = require('lspkind')
+
+local source_mapping = {
+	buffer = "[Buffer]",
+	nvim_lsp = "[LSP]",
+	nvim_lua = "[Lua]",
+	cmp_tabnine = "[TN]",
+	path = "[Path]",
+}
+
   -- Setup lspconfig.
   local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
   capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -220,10 +266,22 @@ lua <<EOF
   require('lspconfig')['tailwindcss'].setup {
     capabilities = capabilities
   }
-  require("telescope").load_extension("git_worktree")
+  require('lspconfig')['solidity_ls'].setup {
+    capabilities = capabilities
+  }
+
+    require("telescope").load_extension("git_worktree")
+  -- load refactoring Telescope extension
+    require("telescope").load_extension("refactoring")
+
+-- remap to open the Telescope refactoring menu in visual mode
+    vim.api.nvim_set_keymap(
+        "v",
+        "<leader>rr",
+        "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
+        { noremap = true }
+    )
+    require('refactoring').setup({})
+    require('lualine').setup()
 EOF
 
-augroup fmt
-  autocmd!
-  autocmd BufWritePre * undojoin | Neoformat
-augroup END
