@@ -68,6 +68,7 @@ call plug#begin('~/.vim/plugged')
 "status bar
     Plug 'hoob3rt/lualine.nvim'
     Plug 'kyazdani42/nvim-web-devicons' " lua
+    Plug 'ryanoasis/vim-devicons'
 
 "fzf
     Plug 'stsewd/fzf-checkout.vim'
@@ -85,18 +86,10 @@ call plug#begin('~/.vim/plugged')
     Plug 'tpope/vim-commentary'
     Plug 'tpope/vim-surround'
     Plug 'tpope/vim-repeat'
-
     Plug 'rhysd/vim-grammarous'
-
     Plug 'tomlion/vim-solidity'
-
     Plug 'onsails/lspkind-nvim'
-
-    Plug 'ryanoasis/vim-devicons'
 call plug#end()
-
-let g:fzf_layout = { 'window': {'width': 0.8, 'height': 0.8 }}
-let $FZF_DEFAULT_OPTS='--reverse'
 
 "***********COLORS THEME *************
     let g:gruvbox_contrast_dark = 'hard'
@@ -116,11 +109,15 @@ let $FZF_DEFAULT_OPTS='--reverse'
     highlight netrwDir guifg=#5eacd3
     highlight qfFileName guifg=#aed75f
     hi TelescopeBorder guifg=#5eacd
+    hi GitGutterAdd guifg=green
+    hi GitGutterChange guifg=#5eacd3
+    hi GitGutterDelete guifg=red
+
 "***********END COLOR THEME *************
 
 let mapleader = " "
 nnoremap <leader>ps :lua require('telescope.builtin').grep_string({search = vim.fn.input("Grep for > ")})<CR>
-nnoremap <C-p> :lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown({winblend = 5}))<cr>
+nnoremap <C-p> :lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown())<cr>
 nnoremap <Leader>pf :lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown({}))<CR>
 
 nnoremap n nzzzv
@@ -169,6 +166,7 @@ nnoremap <leader>F :Telescope live_grep<CR>
 nnoremap <leader>; :lua require('telescope').extensions.git_worktree.git_worktrees()<CR>
 nnoremap vr gd[{V%::s/<C-R>///gc<left><left><left>
 nnoremap vR gD:%s/<C-R>///gc<left><left><left>
+nnoremap <C-t> :Rex<CR>
 
 augroup fmt
     autocmd!
