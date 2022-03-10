@@ -89,6 +89,7 @@ call plug#begin('~/.vim/plugged')
     Plug 'rhysd/vim-grammarous'
     Plug 'tomlion/vim-solidity'
     Plug 'onsails/lspkind-nvim'
+    Plug 'ThePrimeagen/harpoon'
 call plug#end()
 
 "***********COLORS THEME *************
@@ -120,6 +121,10 @@ let mapleader = " "
 nnoremap <leader>ps :lua require('telescope.builtin').grep_string({search = vim.fn.input("Grep for > ")})<CR>
 nnoremap <C-p> :lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown())<cr>
 nnoremap <Leader>pf :lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown({}))<CR>
+nnoremap <leader>hm :lua require("harpoon.mark").add_file()<CR>
+nnoremap <leader>hf :lua require("harpoon.ui").toggle_quick_menu()<CR>
+nnoremap <leader>hn :lua require("harpoon.ui").nav_next()<CR>
+nnoremap <leader>hp :lua require("harpoon.ui").nav_prev()<CR>
 
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -301,5 +306,6 @@ cmp.setup {
     )
     require('refactoring').setup({})
     require('lualine').setup()
+    require("telescope").load_extension('harpoon')
 EOF
 
