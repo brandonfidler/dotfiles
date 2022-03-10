@@ -112,6 +112,7 @@ call plug#end()
     hi GitGutterAdd guifg=green
     hi GitGutterChange guifg=#5eacd3
     hi GitGutterDelete guifg=red
+    hi GitGutterHead guifg=blue
 
 "***********END COLOR THEME *************
 
@@ -265,6 +266,9 @@ local source_mapping = {
     capabilities = capabilities
   }
   require('lspconfig')['solidity_ls'].setup {
+    capabilities = capabilities
+  }
+  require('lspconfig')['eslint'].setup {
     capabilities = capabilities
   }
 
