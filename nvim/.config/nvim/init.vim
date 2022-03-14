@@ -45,6 +45,7 @@ call plug#begin('~/.vim/plugged')
 " Plug 'nvim-lua/completion-nvim'
 
     Plug 'neovim/nvim-lspconfig'
+    Plug 'williamboman/nvim-lsp-installer'
     Plug 'hrsh7th/nvim-compe'
     Plug 'hrsh7th/cmp-cmdline'
     Plug 'hrsh7th/cmp-path'
@@ -93,6 +94,7 @@ call plug#begin('~/.vim/plugged')
 call plug#end()
 
 "***********COLORS THEME *************
+
     let g:gruvbox_contrast_dark = 'hard'
     if exists('+termguicolors')
             let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -104,8 +106,6 @@ call plug#end()
     hi SignColumn guibg=none
     hi CursorLineNR guibg=None
     highlight Normal guibg=none
-    " highlight LineNr guifg=#ff8659
-    " highlight LineNr guifg=#aed75f
     highlight LineNr guifg=#5eacd3
     highlight netrwDir guifg=#5eacd3
     highlight qfFileName guifg=#aed75f
@@ -118,13 +118,20 @@ call plug#end()
 "***********END COLOR THEME *************
 
 let mapleader = " "
+"telescope mapping
 nnoremap <leader>ps :lua require('telescope.builtin').grep_string({search = vim.fn.input("Grep for > ")})<CR>
 nnoremap <C-p> :lua require'telescope.builtin'.git_files(require('telescope.themes').get_dropdown())<cr>
 nnoremap <Leader>pf :lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown({}))<CR>
+"Harpoon mapping
 nnoremap <leader>hm :lua require("harpoon.mark").add_file()<CR>
 nnoremap <leader>hf :lua require("harpoon.ui").toggle_quick_menu()<CR>
 nnoremap <leader>hn :lua require("harpoon.ui").nav_next()<CR>
 nnoremap <leader>hp :lua require("harpoon.ui").nav_prev()<CR>
+
+nnoremap <leader>h1 :lua require("harpoon.ui").nav_file(1)<CR>
+nnoremap <leader>h2 :lua require("harpoon.ui").nav_file(2)<CR>
+nnoremap <leader>h3 :lua require("harpoon.ui").nav_file(3)<CR>
+nnoremap <leader>h4 :lua require("harpoon.ui").nav_file(4)<CR>
 
 nnoremap n nzzzv
 nnoremap N Nzzzv
@@ -142,25 +149,22 @@ vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 inoremap <C-j> :m .+1<CR>==
 inoremap <C-k> :m .-2<CR>==
-inoremap <silent>' ''<left>
-inoremap <silent>" ""<left>
-inoremap <silent>` ``<left>
-inoremap <silent>( ()<left>
-inoremap <silent>[ []<left>
-inoremap <silent>{ {}<left>
+" inoremap <silent>' ''<left>
+" inoremap <silent>" ""<left>
+" inoremap <silent>` ``<left>
+" inoremap <silent>( ()<left>
+" inoremap <silent>[ []<left>
+" inoremap <silent>{ {}<left>
 
 nnoremap <leader>x :!chmod +x %<CR>
 nnoremap <silent> <C-f> :silent !tmux neww tmux-sessionizer<CR>
 nnoremap <leader>k :cnext<CR>
 nnoremap <leader>j :cprev<CR>
 
-nnoremap <leader>gb :GBranches<CR>
-nnoremap <leader>gc :GBranches checkout<CR>
-nnoremap <leader>gn :GBranches create<CR>
-nnoremap <leader>gf :Git fetch<CR>
 nmap <leader>gj :diffget //3<CR>
 nmap <leader>gf :diffget //2<CR>
 nmap <leader>gs :G<CR>
+
 " LSP config (the mappings used in the default file don't quite work right)
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
@@ -183,62 +187,62 @@ lua <<EOF
   -- Setup nvim-cmp.
   local cmp = require'cmp'
 
-  cmp.setup({
-    snippet = {
-      -- REQUIRED - you must specify a snippet engine
-      expand = function(args)
-        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-         require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-      end,
-    },
-    mapping = {
-      ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-      ['<C-y>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-      --['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-      --['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-      ['<C-e>'] = cmp.mapping({
-        i = cmp.mapping.abort(),
-        c = cmp.mapping.close(),
-      }),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-    },
-    sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-     -- { name = 'vsnip' }, -- For vsnip users.
-       { name = 'luasnip' }, -- For luasnip users.
-       --{ name = 'ultisnips' }, -- For ultisnips users.
+ cmp.setup({
+   snippet = {
+     -- REQUIRED - you must specify a snippet engine
+     expand = function(args)
+     require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+       -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+       -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+       -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+     end,
+   },
+   mapping = {
+     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+     ['<C-y>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+     --['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+     --['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+     ['<C-e>'] = cmp.mapping({
+       i = cmp.mapping.abort(),
+       c = cmp.mapping.close(),
+     }),
+     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+   },
+   sources = cmp.config.sources({
+     { name = 'nvim_lsp' },
+     { name = 'luasnip' }, -- For luasnip users.
+      -- { name = 'vsnip' }, -- For vsnip users.
+      --{ name = 'ultisnips' }, -- For ultisnips users.
       -- { name = 'snippy' }, -- For snippy users.
-    }, {
-      { name = 'buffer' },
-    })
-  })
+   }, {
+     { name = 'buffer' },
+   })
+ })
 
-  -- Set configuration for specific filetype.
-  cmp.setup.filetype('gitcommit', {
-    sources = cmp.config.sources({
-      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-    }, {
-      { name = 'buffer' },
-    })
-  })
+ -- Set configuration for specific filetype.
+ cmp.setup.filetype('gitcommit', {
+   sources = cmp.config.sources({
+     { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+   }, {
+     { name = 'buffer' },
+   })
+ })
 
-  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline('/', {
-    sources = {
-      { name = 'buffer' }
-    }
-  })
+ -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+ cmp.setup.cmdline('/', {
+   sources = {
+     { name = 'buffer' }
+   }
+ })
 
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    })
-  })
+ -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+ cmp.setup.cmdline(':', {
+   sources = cmp.config.sources({
+     { name = 'path' }
+   }, {
+     { name = 'cmdline' }
+   })
+ })
 
 
 local lspkind = require('lspkind')
@@ -260,52 +264,34 @@ cmp.setup {
       -- The function below will be called before any actual modifications from lspkind
       -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
       before = function (entry, vim_item)
---        ...
         return vim_item
       end
     })
   }
 }
 
-  -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  require('lspconfig')['tsserver'].setup {
-    capabilities = capabilities
-  }
-  require('lspconfig')['cssmodules_ls'].setup {
-    capabilities = capabilities
-  }
-  require('lspconfig')['cssls'].setup {
-    capabilities = capabilities
-  }
-  require('lspconfig')['html'].setup {
-    capabilities = capabilities
-  }
-  require('lspconfig')['tailwindcss'].setup {
-    capabilities = capabilities
-  }
-  require('lspconfig')['solidity_ls'].setup {
-    capabilities = capabilities
-  }
-  require('lspconfig')['eslint'].setup {
-    capabilities = capabilities
-  }
-
     require("telescope").load_extension("git_worktree")
-  -- load refactoring Telescope extension
+    -- load refactoring Telescope extension
     require("telescope").load_extension("refactoring")
 
--- remap to open the Telescope refactoring menu in visual mode
+    -- remap to open the Telescope refactoring menu in visual mode
     vim.api.nvim_set_keymap(
         "v",
         "<leader>rr",
         "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>",
         { noremap = true }
     )
+
     require('refactoring').setup({})
     require('lualine').setup()
     require("telescope").load_extension('harpoon')
-EOF
+    
+    --setup the language server installation
+    local lsp_installer = require("nvim-lsp-installer")
+    lsp_installer.on_server_ready(function(server)
+    local opts = {}
+    server:setup(opts)
+end)
 
+require("luasnip.loaders.from_vscode").load()
+EOF
