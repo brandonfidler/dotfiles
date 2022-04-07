@@ -39,24 +39,13 @@ call plug#begin('~/.vim/plugged')
     Plug 'nvim-lua/plenary.nvim'
     Plug 'nvim-telescope/telescope.nvim'
     Plug 'nvim-telescope/telescope-fzy-native.nvim'
-"Snippets
-"see later which ones are REQUIRED
-" Plug 'nvim-lua/lsp_extensions.nvim'
-" Plug 'nvim-lua/completion-nvim'
 
-    Plug 'neovim/nvim-lspconfig'
-    Plug 'williamboman/nvim-lsp-installer'
-    Plug 'hrsh7th/nvim-compe'
-    Plug 'hrsh7th/cmp-cmdline'
-    Plug 'hrsh7th/cmp-path'
-    Plug 'hrsh7th/cmp-nvim-lsp'
-    Plug 'hrsh7th/cmp-buffer'
-    Plug 'hrsh7th/nvim-cmp'
-
-" For luasnip users.
-    Plug 'L3MON4D3/LuaSnip'
-    Plug 'rafamadriz/friendly-snippets'
-    Plug 'saadparwaiz1/cmp_luasnip'
+" Language Client
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}
+  let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-yaml', 'coc-yank', 'coc-vimlsp', 'coc-snippets', 'coc-highlight', 'coc-git', 'coc-tailwindcss', 'coc-styled-components', 'coc-react-refactor']
+  " TypeScript Highlighting
+  Plug 'leafgarland/typescript-vim'
+  Plug 'peitalin/vim-jsx-typescript'
 
 "git
     Plug 'tpope/vim-fugitive'
@@ -116,6 +105,19 @@ call plug#end()
     hi GitGutterHead guifg=blue
 
 "***********END COLOR THEME *************
+"
+"git.addedSign.hlGroup": "GitGutterAdd",
+"git.changedSign.hlGroup": "GitGutterChange",
+"git.removedSign.hlGroup": "GitGutterDelete",
+"git.topRemovedSign.hlGroup": "GitGutterDelete",
+"git.changeRemovedSign.hlGroup": "GitGutterChangeDelete",
+
+let g:markdown_fenced_languages = [
+      \ 'vim',
+      \ 'help'
+      \]
+
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 let mapleader = " "
 "telescope mapping
@@ -149,12 +151,6 @@ vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 inoremap <C-j> :m .+1<CR>==
 inoremap <C-k> :m .-2<CR>==
-" inoremap <silent>' ''<left>
-" inoremap <silent>" ""<left>
-" inoremap <silent>` ``<left>
-" inoremap <silent>( ()<left>
-" inoremap <silent>[ []<left>
-" inoremap <silent>{ {}<left>
 
 nnoremap <leader>x :!chmod +x %<CR>
 nnoremap <silent> <C-f> :silent !tmux neww tmux-sessionizer<CR>
@@ -166,10 +162,10 @@ nmap <leader>gf :diffget //2<CR>
 nmap <leader>gs :G<CR>
 
 " LSP config (the mappings used in the default file don't quite work right)
-nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+" nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+" nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+" nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+" nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <leader>F :Telescope live_grep<CR>
@@ -177,99 +173,20 @@ nnoremap <leader>; :lua require('telescope').extensions.git_worktree.git_worktre
 nnoremap vr gd[{V%::s/<C-R>///gc<left><left><left>
 nnoremap vR gD:%s/<C-R>///gc<left><left><left>
 nnoremap <C-t> :Rex<CR>
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
+
 
 augroup fmt
     autocmd!
     autocmd BufWritePre * undojoin | Neoformat
 augroup END
 
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
 lua <<EOF
-  -- Setup nvim-cmp.
-  local cmp = require'cmp'
-
- cmp.setup({
-   snippet = {
-     -- REQUIRED - you must specify a snippet engine
-     expand = function(args)
-     require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-       -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-       -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-       -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-     end,
-   },
-   mapping = {
-     ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-     ['<C-y>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-     --['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-     --['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
-     ['<C-e>'] = cmp.mapping({
-       i = cmp.mapping.abort(),
-       c = cmp.mapping.close(),
-     }),
-     ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-   },
-   sources = cmp.config.sources({
-     { name = 'nvim_lsp' },
-     { name = 'luasnip' }, -- For luasnip users.
-      -- { name = 'vsnip' }, -- For vsnip users.
-      --{ name = 'ultisnips' }, -- For ultisnips users.
-      -- { name = 'snippy' }, -- For snippy users.
-   }, {
-     { name = 'buffer' },
-   })
- })
-
- -- Set configuration for specific filetype.
- cmp.setup.filetype('gitcommit', {
-   sources = cmp.config.sources({
-     { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-   }, {
-     { name = 'buffer' },
-   })
- })
-
- -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
- cmp.setup.cmdline('/', {
-   sources = {
-     { name = 'buffer' }
-   }
- })
-
- -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
- cmp.setup.cmdline(':', {
-   sources = cmp.config.sources({
-     { name = 'path' }
-   }, {
-     { name = 'cmdline' }
-   })
- })
-
-
-local lspkind = require('lspkind')
-
-local source_mapping = {
-	buffer = "[Buffer]",
-	nvim_lsp = "[LSP]",
-	nvim_lua = "[Lua]",
-	cmp_tabnine = "[TN]",
-	path = "[Path]",
-}
-
-cmp.setup {
-  formatting = {
-    format = lspkind.cmp_format({
-      mode = 'symbol', -- show only symbol annotations
-      maxwidth = 50, -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
-
-      -- The function below will be called before any actual modifications from lspkind
-      -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
-      before = function (entry, vim_item)
-        return vim_item
-      end
-    })
-  }
-}
-
     require("telescope").load_extension("git_worktree")
     -- load refactoring Telescope extension
     require("telescope").load_extension("refactoring")
@@ -285,13 +202,4 @@ cmp.setup {
     require('refactoring').setup({})
     require('lualine').setup()
     require("telescope").load_extension('harpoon')
-    
-    --setup the language server installation
-    local lsp_installer = require("nvim-lsp-installer")
-    lsp_installer.on_server_ready(function(server)
-    local opts = {}
-    server:setup(opts)
-end)
-
-require("luasnip.loaders.from_vscode").load()
 EOF
