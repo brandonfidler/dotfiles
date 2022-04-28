@@ -42,7 +42,7 @@ call plug#begin('~/.vim/plugged')
 
 " Language Client
   Plug 'neoclide/coc.nvim', {'branch': 'release'}
-  let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-yaml', 'coc-yank', 'coc-vimlsp', 'coc-snippets', 'coc-highlight', 'coc-git', 'coc-tailwindcss', 'coc-styled-components', 'coc-react-refactor']
+  let g:coc_global_extensions = ['coc-emmet', 'coc-css', 'coc-html', 'coc-json', 'coc-prettier', 'coc-tsserver', 'coc-yaml', 'coc-yank', 'coc-vimlsp', 'coc-snippets', 'coc-highlight', 'coc-git', 'coc-tailwindcss', 'coc-styled-components', 'coc-react-refactor', 'coc-leetcode']
   " TypeScript Highlighting
   Plug 'leafgarland/typescript-vim'
   Plug 'peitalin/vim-jsx-typescript'
@@ -80,6 +80,11 @@ call plug#begin('~/.vim/plugged')
     Plug 'tomlion/vim-solidity'
     Plug 'onsails/lspkind-nvim'
     Plug 'ThePrimeagen/harpoon'
+"debugger
+    Plug 'mfussenegger/nvim-dap'
+    Plug 'nvim-telescope/telescope-dap.nvim'
+    Plug 'theHamsta/nvim-dap-virtual-text'
+    Plug 'rcarriga/nvim-dap-ui'
 call plug#end()
 
 "***********COLORS THEME *************
@@ -173,16 +178,12 @@ nnoremap <leader>; :lua require('telescope').extensions.git_worktree.git_worktre
 nnoremap vr gd[{V%::s/<C-R>///gc<left><left><left>
 nnoremap vR gD:%s/<C-R>///gc<left><left><left>
 nnoremap <C-t> :Rex<CR>
+nnoremap <leader>cod :Copilot disable<CR>
+nnoremap <leader>coe :Copilot enable<CR>
 xmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>a  <Plug>(coc-codeaction-selected)
 
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>"
-
-
-augroup fmt
-    autocmd!
-    autocmd BufWritePre * undojoin | Neoformat
-augroup END
 
 autocmd CursorHold * silent call CocActionAsync('highlight')
 
@@ -202,4 +203,72 @@ lua <<EOF
     require('refactoring').setup({})
     require('lualine').setup()
     require("telescope").load_extension('harpoon')
+
+    local dap = require('dap')
+dap.adapters.node2 = {
+  type = 'executable',
+  command = 'node',
+  args = {os.getenv('HOME') .. '/.dotfiles/vscode-node-debug2/out/src/nodeDebug.js'},
+}
+dap.configurations.javascript = {
+  {
+    name = 'Launch',
+    type = 'node2',
+    request = 'launch',
+    program = '${file}',
+    cwd = vim.fn.getcwd(),
+    sourceMaps = true,
+    protocol = 'inspector',
+    console = 'integratedTerminal',
+  },
+  {
+    -- For this to work you need to make sure the node process is started with the `--inspect` flag.
+    name = 'Attach to process',
+    type = 'node2',
+    request = 'attach',
+    processId = require'dap.utils'.pick_process,
+  },
+}
+vim.fn.sign_define('DapBreakpoint', {text='🟥', texthl='', linehl='', numhl=''})
+vim.fn.sign_define('DapStopped', {text='⭐️', texthl='', linehl='', numhl=''})
 EOF
+
+nnoremap <leader>dh :lua require'dap'.toggle_breakpoint()<CR>
+nnoremap <S-k> :lua require'dap'.step_out()<CR>
+nnoremap <S-l> :lua require'dap'.step_into()<CR>
+nnoremap <S-j> :lua require'dap'.step_over()<CR>
+nnoremap <leader>ds :lua require'dap'.close()<CR>
+nnoremap <leader>dn :lua require'dap'.continue()<CR>
+nnoremap <leader>dk :lua require'dap'.up()<CR>
+nnoremap <leader>dj :lua require'dap'.down()<CR>
+nnoremap <leader>d_ :lua require'dap'.disconnect();require'dap'.close();require'dap'.run_last()<CR>
+nnoremap <leader>dr :lua require'dap'.repl.open({}, 'vsplit')<CR><C-w>l
+" nnoremap <leader>di :lua require'dap.ui.variables'.hover()<CR>
+vnoremap <leader>di :lua require'dap.ui.variables'.visual_hover()<CR>
+nnoremap <leader>d? :lua require'dap.ui.variables'.scopes()<CR>
+nnoremap <leader>de :lua require'dap'.set_exception_breakpoints({"all"})<CR>
+nnoremap <leader>da :lua require'debugHelper'.attach()<CR>
+nnoremap <leader>dA :lua require'debugHelper'.attachToRemote()<CR>
+nnoremap <leader>di :lua require'dap.ui.widgets'.hover()<CR>
+nnoremap <leader>d? :lua local widgets=require'dap.ui.widgets';widgets.centered_float(widgets.scopes)<CR>
+
+
+lua << EOF
+require('telescope').setup()
+require('telescope').load_extension('dap')
+EOF
+
+nnoremap <leader>df :Telescope dap frames<CR>
+nnoremap <leader>db :Telescope dap list_breakpoints<CR>
+
+lua << EOF
+require("nvim-dap-virtual-text").setup()
+EOF
+
+
+let g:dap_virtual_text = v:true
+
+lua << EOF
+require('dapui').setup()
+EOF
+nnoremap <leader>dq :lua require('dapui').toggle()<CR>
