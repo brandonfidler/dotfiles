@@ -1,0 +1,2 @@
+-- Test file the currently file
+-- vim.api.nvim_set_keymap("n", "<leader> ", "<Plug>PlenaryTestFile", { noremap = false, silent = false })
