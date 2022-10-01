@@ -44,6 +44,8 @@ return require("packer").startup(function(use)
     use('tpope/vim-commentary')
     use('tpope/vim-repeat')
     use("glepnir/lspsaga.nvim")
+    --use gitgutter
+    use('airblade/vim-gitgutter')
 
     use('Hoffs/omnisharp-extended-lsp.nvim')
     use { "catppuccin/nvim", as = "catppuccin" }
