@@ -1,17 +1,15 @@
-require('lualine').setup()
-    require('lualine').setup()
-
 
     require('lualine').setup {
       options = {
         icons_enabled = true,
-        theme = vim.g.theprimeagen_colorscheme,
+        theme = "catppuccin",
         component_separators = { left = '|', right = '|'},
-        section_separators = { left = '', right = ''},
+        section_separators = { left = '', right = ''},
         disabled_filetypes = {},
         always_divide_middle = true,
         globalstatus = false,
       },
+      -- show notifications in the middle of the statusline
       sections = {
         lualine_a = {'mode'},
         lualine_b = {'branch', 'diff'},

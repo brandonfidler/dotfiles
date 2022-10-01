@@ -41,7 +41,6 @@ cmp.setup({
 	},
 })
 
-
 local function config(_config)
 return vim.tbl_deep_extend("force", {
     capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
@@ -78,6 +77,7 @@ require'lspconfig'.sumneko_lua.setup {
 					[vim.fn.expand("$VIMRUNTIME/lua")] = true,
 					[vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
 				},
+
       },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
@@ -117,3 +117,13 @@ require'lspconfig'.vimls.setup{}
 
 require("luasnip.loaders.from_vscode").lazy_load()
 require'lspconfig'.bashls.setup{}
+
+local nvim_lsp = require'lspconfig'
+
+local pid = vim.fn.getpid()
+local omnisharp_bin = "/Users/brandonfidler/.dotfiles/omnisharp/run"
+
+require'lspconfig'.omnisharp.setup{
+    cmd = { omnisharp_bin, "--languageserver" , "--hostPID", tostring(pid) };
+    root_dir = nvim_lsp.util.root_pattern("*.csproj","*.sln");
+}

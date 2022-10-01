@@ -20,13 +20,13 @@ autocmd('TextYankPost', {
     end,
 })
 
-autocmd({"BufEnter", "BufWinEnter", "TabEnter"}, {
-    group = ThePrimeagenGroup,
-    pattern = "*.rs",
-    callback = function()
-        require("lsp_extensions").inlay_hints{}
-    end
-})
+-- autocmd({"BufEnter", "BufWinEnter", "TabEnter"}, {
+--     group = ThePrimeagenGroup,
+--     pattern = "*.rs",
+--     callback = function()
+--         require("lsp_extensions").inlay_hints{}
+--     end
+-- })
 
 -- autocmd({"BufWritePre"}, {
 --     group = ThePrimeagenGroup,
