@@ -10,36 +10,29 @@ local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
 
 autocmd('TextYankPost', {
-    group = yank_group,
-    pattern = '*',
-    callback = function()
-        vim.highlight.on_yank({
-            higroup = 'IncSearch',
-            timeout = 40,
-        })
-    end,
+  group = yank_group,
+  pattern = '*',
+  callback = function()
+    vim.highlight.on_yank({
+      higroup = 'IncSearch',
+      timeout = 40,
+    })
+  end,
 })
 
--- autocmd({"BufEnter", "BufWinEnter", "TabEnter"}, {
---     group = ThePrimeagenGroup,
---     pattern = "*.rs",
---     callback = function()
---         require("lsp_extensions").inlay_hints{}
---     end
--- })
+--run vim.lsp.bug.format() on save
+autocmd({ "BufWritePre" }, {
+  group = ThePrimeagenGroup,
+  pattern = "*",
+  command = "lua vim.lsp.buf.format()",
+})
 
--- autocmd({"BufWritePre"}, {
---     group = ThePrimeagenGroup,
---     pattern = "*",
---     command = "%s/\\s\\+$//e",
--- })
-
--- when saving run Neoformat
--- autocmd({"BufWritePre"}, {
---     group = ThePrimeagenGroup,
---     pattern = "*",
---     command = "Neoformat",
--- })
+--if the file ext is .quorum set syntax to java
+autocmd({ "BufRead" }, {
+  group = ThePrimeagenGroup,
+  pattern = "*.quorum",
+  command = "set syntax=java",
+})
 
 
 vim.g.netrw_browse_split = 0
