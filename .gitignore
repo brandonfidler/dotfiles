@@ -1,3 +1,8 @@
 plugged/
 env/
 deploy.sh
+neovim/
+omnisharp/
+
+#ignore all .bak
+./nvim/.config/alacritty

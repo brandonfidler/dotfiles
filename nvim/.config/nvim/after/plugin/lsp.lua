@@ -135,6 +135,7 @@ require 'lspconfig'.eslint.setup {}
 require 'lspconfig'.cssmodules_ls.setup {}
 require 'lspconfig'.solidity_ls.setup {}
 require 'lspconfig'.vimls.setup {}
+require("lspconfig").ccls.setup(config())
 
 require("luasnip.loaders.from_vscode").lazy_load()
 require 'lspconfig'.bashls.setup {}
@@ -148,3 +149,14 @@ require 'lspconfig'.omnisharp.setup {
   cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) };
   root_dir = nvim_lsp.util.root_pattern("*.csproj", "*.sln");
 }
+
+require 'lspconfig'.rust_analyzer.setup(config({
+  cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+  settings = {
+    rust = {
+      unstable_features = true,
+      build_on_save = false,
+      all_features = true,
+    },
+  }
+}))

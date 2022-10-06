@@ -21,7 +21,6 @@ return require("packer").startup(function(use)
   use('hrsh7th/cmp-cmdline')
 
   use('onsails/lspkind-nvim')
-  use('nvim-lua/lsp_extensions.nvim')
 
   use('tpope/vim-fugitive')
   use('ThePrimeagen/git-worktree.nvim')
@@ -53,4 +52,7 @@ return require("packer").startup(function(use)
   use('Hoffs/omnisharp-extended-lsp.nvim')
   use { "catppuccin/nvim", as = "catppuccin" }
   use("f-person/auto-dark-mode.nvim")
+
+  use('lvimuser/lsp-inlayhints.nvim')
+
 end)
