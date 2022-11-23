@@ -6,3 +6,6 @@ omnisharp/
 
 #ignore all .bak
 ./nvim/.config/alacritty
+
+#ignore .DS_Store
+.DS_Store

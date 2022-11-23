@@ -1,8 +1,8 @@
 local Remap = require("theprimeagen.keymap")
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
-local sumneko_root_path = "/home/mpaulson/personal/sumneko"
-local sumneko_binary = sumneko_root_path .. "/bin/lua-language-server"
+
 local cmp = require("cmp")
 local lspkind = require("lspkind")
 
@@ -27,7 +27,6 @@ cmp.setup({
         nvim_lua = "[api]",
         path = "[Path]",
         luasnip = "[Snip]",
-        nvim_lsp_signature_help = "[Sig]",
       },
     },
   },
@@ -37,11 +36,7 @@ cmp.setup({
     { name = "luasnip" },
     { name = "buffer" },
     { name = "path" },
-    { name = "nvim_lsp_signature_help" },
-  },
-  experimental = {
-    native_menu = false,
-  },
+  }
 })
 
 require 'cmp'.setup.cmdline(':', {
@@ -63,7 +58,7 @@ require 'cmp'.setup.cmdline('?', {
 
 local function config(_config)
   return vim.tbl_deep_extend("force", {
-    capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+    capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
     on_attach = function()
       Remap.nnoremap("gd", ":lua vim.lsp.buf.definition()<CR>")
       Remap.nnoremap("K", ":lua vim.lsp.buf.hover()<CR>")
@@ -79,7 +74,7 @@ local function config(_config)
   }, _config or {})
 end
 
-require("lspconfig").tsserver.setup(config())
+require("lspconfig").tsserver.setup(config({ js_config = { eslint = { enable = true } } }))
 
 require 'lspconfig'.sumneko_lua.setup {
   settings = {
@@ -136,6 +131,7 @@ require 'lspconfig'.cssmodules_ls.setup {}
 require 'lspconfig'.solidity_ls.setup {}
 require 'lspconfig'.vimls.setup {}
 require("lspconfig").ccls.setup(config())
+require 'lspconfig'.gopls.setup {}
 
 require("luasnip.loaders.from_vscode").lazy_load()
 require 'lspconfig'.bashls.setup {}

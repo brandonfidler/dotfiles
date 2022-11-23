@@ -4,15 +4,13 @@ local auto_dark_mode = require('auto-dark-mode')
 auto_dark_mode.setup({
   update_interval = 1000,
   set_dark_mode = function()
-    vim.g.catppuccin_flavour = "mocha"
-    vim.cmd [[colorscheme catppuccin]]
+    vim.cmd [[colorscheme catppuccin-mocha]]
     vim.cmd [[:silent !tmux source-file ~/.tmux.conf]]
     vim.cmd [[:silent !kitty +kitten themes --reload-in=all Catppuccin-Mocha]]
     vim.cmd [[:silent !zsh -l]]
   end,
   set_light_mode = function()
-    vim.g.catppuccin_flavour = "latte"
-    vim.cmd [[colorscheme catppuccin]]
+    vim.cmd [[colorscheme catppuccin-latte]]
     vim.cmd [[:silent !tmux source-file ~/.tmux.conf]]
     vim.cmd [[:silent !kitty +kitten themes --reload-in=all Catppuccin-Latte]]
     vim.cmd [[:silent !zsh -l]]
@@ -22,6 +20,7 @@ auto_dark_mode.setup({
 auto_dark_mode.init()
 
 require("catppuccin").setup({
+  print(vim.g.catppuccin_flavour),
   compile = {
     enabled = false,
     path = vim.fn.stdpath("cache") .. "/catppuccin",

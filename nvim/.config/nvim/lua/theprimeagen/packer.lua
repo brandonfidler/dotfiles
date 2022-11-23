@@ -2,6 +2,7 @@ return require("packer").startup(function(use)
   use("wbthomason/packer.nvim")
   use('nvim-lua/popup.nvim')
   use('nvim-lua/plenary.nvim')
+  use('heavenshell/vim-jsdoc')
 
   use('nvim-telescope/telescope.nvim')
   use('nvim-telescope/telescope-fzy-native.nvim')
@@ -30,7 +31,7 @@ return require("packer").startup(function(use)
   use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
 
   -- disabled because poor performance in big files
-  -- use('nvim-treesitter/nvim-treesitter-context')
+  use('nvim-treesitter/nvim-treesitter-context')
 
   use('github/copilot.vim')
   use(
@@ -54,5 +55,17 @@ return require("packer").startup(function(use)
   use("f-person/auto-dark-mode.nvim")
 
   use('lvimuser/lsp-inlayhints.nvim')
+
+  use {
+    "folke/trouble.nvim",
+    requires = "kyazdani42/nvim-web-devicons",
+    config = function()
+      require("trouble").setup {
+        -- your configuration comes here
+        -- or leave it empty to use the default settings
+        -- refer to the configuration section below
+      }
+    end
+  }
 
 end)

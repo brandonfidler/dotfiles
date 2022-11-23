@@ -40,9 +40,8 @@ vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
 
-vim.opt.laststatus =  3
+vim.opt.laststatus = 3
 
 vim.g.mapleader = " "
 
 vim.opt.mmp = 2000
-
