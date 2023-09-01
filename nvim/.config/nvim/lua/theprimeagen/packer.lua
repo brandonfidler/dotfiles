@@ -1,14 +1,21 @@
 return require("packer").startup(function(use)
   use("wbthomason/packer.nvim")
+  use("VonHeikemen/lsp-zero.nvim")
+
+  use {
+    'nvim-telescope/telescope.nvim',
+    requires = { { 'nvim-lua/plenary.nvim' } }
+  }
+
   use('nvim-lua/popup.nvim')
   use('nvim-lua/plenary.nvim')
   use('heavenshell/vim-jsdoc')
+  use('ellisonleao/gruvbox.nvim')
+  use('folke/tokyonight.nvim')
 
-  use('nvim-telescope/telescope.nvim')
   use('nvim-telescope/telescope-fzy-native.nvim')
   use('neovim/nvim-lspconfig')
 
-  use('pantharshit00/vim-prisma')
   use('rafamadriz/friendly-snippets')
   use('L3MON4D3/LuaSnip')
 
@@ -29,6 +36,8 @@ return require("packer").startup(function(use)
 
   use('ThePrimeagen/harpoon')
   use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
+  use('tpope/vim-surround')
+  use('BurntSushi/ripgrep')
 
   -- disabled because poor performance in big files
   use('nvim-treesitter/nvim-treesitter-context')
@@ -56,6 +65,8 @@ return require("packer").startup(function(use)
 
   use('lvimuser/lsp-inlayhints.nvim')
 
+  use('simrat39/symbols-outline.nvim')
+
   use {
     "folke/trouble.nvim",
     requires = "kyazdani42/nvim-web-devicons",
@@ -66,6 +77,17 @@ return require("packer").startup(function(use)
         -- refer to the configuration section below
       }
     end
+
   }
 
+
+  use({
+    "luukvbaal/statuscol.nvim",
+    config = function() require("statuscol").setup({ setopt = true }) end
+  })
+
+  use('Quramy/vim-js-pretty-template')
+
+  use({ 'toppair/peek.nvim', run = 'deno task --quiet build:fast' })
+  use({ 'vim-test/vim-test' })
 end)

@@ -6,6 +6,12 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 local cmp = require("cmp")
 local lspkind = require("lspkind")
 
+local lsp = require('lsp-zero').preset({})
+
+lsp.on_attach(function(client, bufnr)
+  lsp.default_keymaps({ buffer = bufnr })
+end)
+
 cmp.setup({
   snippet = {
     expand = function(args)
@@ -55,7 +61,6 @@ require 'cmp'.setup.cmdline('?', {
   }
 })
 
-
 local function config(_config)
   return vim.tbl_deep_extend("force", {
     capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities()),
@@ -76,7 +81,7 @@ end
 
 require("lspconfig").tsserver.setup(config({ js_config = { eslint = { enable = true } } }))
 
-require 'lspconfig'.sumneko_lua.setup {
+require 'lspconfig'.lua_ls.setup {
   settings = {
     Lua = {
       runtime = {
@@ -93,7 +98,6 @@ require 'lspconfig'.sumneko_lua.setup {
           [vim.fn.expand("$VIMRUNTIME/lua")] = true,
           [vim.fn.expand("$VIMRUNTIME/lua/vim/lsp")] = true,
         },
-
       },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = {
@@ -142,8 +146,8 @@ local pid = vim.fn.getpid()
 local omnisharp_bin = "/Users/brandonfidler/.dotfiles/omnisharp/run"
 
 require 'lspconfig'.omnisharp.setup {
-  cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) };
-  root_dir = nvim_lsp.util.root_pattern("*.csproj", "*.sln");
+  cmd = { omnisharp_bin, "--languageserver", "--hostPID", tostring(pid) },
+  root_dir = nvim_lsp.util.root_pattern("*.csproj", "*.sln"),
 }
 
 require 'lspconfig'.rust_analyzer.setup(config({
@@ -156,3 +160,21 @@ require 'lspconfig'.rust_analyzer.setup(config({
     },
   }
 }))
+
+require 'lspconfig'.pylsp.setup {
+  settings = {
+    pylsp = {
+      plugins = {
+        pycodestyle = {
+          ignore = { 'W391' },
+          maxLineLength = 100
+        }
+      }
+    }
+  }
+}
+
+require 'lspconfig'.docker_compose_language_service.setup {}
+require 'lspconfig'.dockerls.setup {}
+
+lsp.setup()
