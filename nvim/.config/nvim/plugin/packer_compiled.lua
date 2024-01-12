@@ -49,8 +49,8 @@ local function save_profiles(threshold)
 end
 
 time([[Luarocks path setup]], true)
-local package_path_str = "/Users/brandonfidler/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?.lua;/Users/brandonfidler/.cache/nvim/packer_hererocks/2.1.0-beta3/share/lua/5.1/?/init.lua;/Users/brandonfidler/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?.lua;/Users/brandonfidler/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/luarocks/rocks-5.1/?/init.lua"
-local install_cpath_pattern = "/Users/brandonfidler/.cache/nvim/packer_hererocks/2.1.0-beta3/lib/lua/5.1/?.so"
+local package_path_str = "/Users/brandonfidler/.cache/nvim/packer_hererocks/2.1.1703358377/share/lua/5.1/?.lua;/Users/brandonfidler/.cache/nvim/packer_hererocks/2.1.1703358377/share/lua/5.1/?/init.lua;/Users/brandonfidler/.cache/nvim/packer_hererocks/2.1.1703358377/lib/luarocks/rocks-5.1/?.lua;/Users/brandonfidler/.cache/nvim/packer_hererocks/2.1.1703358377/lib/luarocks/rocks-5.1/?/init.lua"
+local install_cpath_pattern = "/Users/brandonfidler/.cache/nvim/packer_hererocks/2.1.1703358377/lib/lua/5.1/?.so"
 if not string.find(package.path, package_path_str, 1, true) then
   package.path = package.path .. ';' .. package_path_str
 end
@@ -79,20 +79,45 @@ _G.packer_plugins = {
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["auto-dark-mode.nvim"] = {
+    loaded = true,
+    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/auto-dark-mode.nvim",
+    url = "https://github.com/f-person/auto-dark-mode.nvim"
+  },
+  catppuccin = {
+    loaded = true,
+    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/catppuccin",
+    url = "https://github.com/catppuccin/nvim"
+  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/cmp-buffer",
     url = "https://github.com/hrsh7th/cmp-buffer"
+  },
+  ["cmp-cmdline"] = {
+    loaded = true,
+    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/cmp-cmdline",
+    url = "https://github.com/hrsh7th/cmp-cmdline"
   },
   ["cmp-nvim-lsp"] = {
     loaded = true,
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
     url = "https://github.com/hrsh7th/cmp-nvim-lsp"
   },
+  ["cmp-nvim-lsp-signature-help"] = {
+    loaded = true,
+    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp-signature-help",
+    url = "https://github.com/hrsh7th/cmp-nvim-lsp-signature-help"
+  },
   ["cmp-nvim-lua"] = {
     loaded = true,
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/cmp-nvim-lua",
     url = "https://github.com/hrsh7th/cmp-nvim-lua"
+  },
+  ["cmp-path"] = {
+    loaded = true,
+    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/cmp-path",
+    url = "https://github.com/hrsh7th/cmp-path"
   },
   ["copilot.vim"] = {
     loaded = true,
@@ -109,11 +134,6 @@ _G.packer_plugins = {
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/fzf",
     url = "https://github.com/junegunn/fzf"
   },
-  ["fzf-checkout.vim"] = {
-    loaded = true,
-    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/fzf-checkout.vim",
-    url = "https://github.com/stsewd/fzf-checkout.vim"
-  },
   ["fzf.vim"] = {
     loaded = true,
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/fzf.vim",
@@ -124,25 +144,25 @@ _G.packer_plugins = {
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/git-worktree.nvim",
     url = "https://github.com/ThePrimeagen/git-worktree.nvim"
   },
-  gruvbox = {
+  ["gruvbox.nvim"] = {
     loaded = true,
-    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/gruvbox",
-    url = "https://github.com/gruvbox-community/gruvbox"
-  },
-  ["gv.vim"] = {
-    loaded = true,
-    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/gv.vim",
-    url = "https://github.com/junegunn/gv.vim"
+    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/gruvbox.nvim",
+    url = "https://github.com/ellisonleao/gruvbox.nvim"
   },
   harpoon = {
     loaded = true,
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/harpoon",
     url = "https://github.com/ThePrimeagen/harpoon"
   },
-  ["lsp_extensions.nvim"] = {
+  ["lsp-inlayhints.nvim"] = {
     loaded = true,
-    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/lsp_extensions.nvim",
-    url = "https://github.com/nvim-lua/lsp_extensions.nvim"
+    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/lsp-inlayhints.nvim",
+    url = "https://github.com/lvimuser/lsp-inlayhints.nvim"
+  },
+  ["lsp-zero.nvim"] = {
+    loaded = true,
+    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/lsp-zero.nvim",
+    url = "https://github.com/VonHeikemen/lsp-zero.nvim"
   },
   ["lspkind-nvim"] = {
     loaded = true,
@@ -158,16 +178,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/lualine.nvim",
     url = "https://github.com/nvim-lualine/lualine.nvim"
-  },
-  ["markdown-preview.nvim"] = {
-    loaded = true,
-    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/markdown-preview.nvim",
-    url = "https://github.com/iamcco/markdown-preview.nvim"
-  },
-  neoformat = {
-    loaded = true,
-    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/neoformat",
-    url = "https://github.com/sbdchd/neoformat"
   },
   ["nvim-cmp"] = {
     loaded = true,
@@ -194,25 +204,20 @@ _G.packer_plugins = {
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
     url = "https://github.com/kyazdani42/nvim-web-devicons"
   },
-  ["omnisharp-vim"] = {
+  ["omnisharp-extended-lsp.nvim"] = {
     loaded = true,
-    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/omnisharp-vim",
-    url = "https://github.com/OmniSharp/omnisharp-vim"
-  },
-  onehalf = {
-    loaded = true,
-    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/onehalf",
-    url = "https://github.com/sonph/onehalf"
+    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/omnisharp-extended-lsp.nvim",
+    url = "https://github.com/Hoffs/omnisharp-extended-lsp.nvim"
   },
   ["packer.nvim"] = {
     loaded = true,
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/packer.nvim",
     url = "https://github.com/wbthomason/packer.nvim"
   },
-  playground = {
+  ["peek.nvim"] = {
     loaded = true,
-    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/playground",
-    url = "https://github.com/nvim-treesitter/playground"
+    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/peek.nvim",
+    url = "https://github.com/toppair/peek.nvim"
   },
   ["plenary.nvim"] = {
     loaded = true,
@@ -229,6 +234,16 @@ _G.packer_plugins = {
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/refactoring.nvim",
     url = "https://github.com/ThePrimeagen/refactoring.nvim"
   },
+  ripgrep = {
+    loaded = true,
+    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/ripgrep",
+    url = "https://github.com/BurntSushi/ripgrep"
+  },
+  ["symbols-outline.nvim"] = {
+    loaded = true,
+    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/symbols-outline.nvim",
+    url = "https://github.com/simrat39/symbols-outline.nvim"
+  },
   ["telescope-fzy-native.nvim"] = {
     loaded = true,
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/telescope-fzy-native.nvim",
@@ -244,6 +259,12 @@ _G.packer_plugins = {
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/tokyonight.nvim",
     url = "https://github.com/folke/tokyonight.nvim"
   },
+  ["trouble.nvim"] = {
+    config = { "\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0" },
+    loaded = true,
+    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/trouble.nvim",
+    url = "https://github.com/folke/trouble.nvim"
+  },
   ["vim-commentary"] = {
     loaded = true,
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/vim-commentary",
@@ -253,11 +274,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/vim-devicons",
     url = "https://github.com/ryanoasis/vim-devicons"
-  },
-  ["vim-easy-align"] = {
-    loaded = true,
-    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/vim-easy-align",
-    url = "https://github.com/junegunn/vim-easy-align"
   },
   ["vim-fugitive"] = {
     loaded = true,
@@ -269,39 +285,43 @@ _G.packer_plugins = {
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/vim-gitgutter",
     url = "https://github.com/airblade/vim-gitgutter"
   },
-  ["vim-grammarous"] = {
+  ["vim-js-pretty-template"] = {
     loaded = true,
-    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/vim-grammarous",
-    url = "https://github.com/rhysd/vim-grammarous"
+    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/vim-js-pretty-template",
+    url = "https://github.com/Quramy/vim-js-pretty-template"
   },
-  ["vim-prisma"] = {
+  ["vim-jsdoc"] = {
     loaded = true,
-    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/vim-prisma",
-    url = "https://github.com/pantharshit00/vim-prisma"
+    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/vim-jsdoc",
+    url = "https://github.com/heavenshell/vim-jsdoc"
+  },
+  ["vim-lsc"] = {
+    loaded = true,
+    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/vim-lsc",
+    url = "https://github.com/natebosch/vim-lsc"
   },
   ["vim-repeat"] = {
     loaded = true,
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/vim-repeat",
     url = "https://github.com/tpope/vim-repeat"
   },
-  ["vim-rhubarb"] = {
-    loaded = true,
-    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/vim-rhubarb",
-    url = "https://github.com/tpope/vim-rhubarb"
-  },
-  ["vim-solidity"] = {
-    loaded = true,
-    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/vim-solidity",
-    url = "https://github.com/tomlion/vim-solidity"
-  },
   ["vim-surround"] = {
     loaded = true,
     path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/vim-surround",
     url = "https://github.com/tpope/vim-surround"
+  },
+  ["vim-test"] = {
+    loaded = true,
+    path = "/Users/brandonfidler/.local/share/nvim/site/pack/packer/start/vim-test",
+    url = "https://github.com/vim-test/vim-test"
   }
 }
 
 time([[Defining packer_plugins]], false)
+-- Config for: trouble.nvim
+time([[Config for trouble.nvim]], true)
+try_loadstring("\27LJ\2\n9\0\0\3\0\3\0\a6\0\0\0'\2\1\0B\0\2\0029\0\2\0004\2\0\0B\0\2\1K\0\1\0\nsetup\ftrouble\frequire\0", "config", "trouble.nvim")
+time([[Config for trouble.nvim]], false)
 
 _G._packer.inside_compile = false
 if _G._packer.needs_bufread == true then

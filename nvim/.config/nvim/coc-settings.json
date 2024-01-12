@@ -1,5 +1,24 @@
 {
   "omnisharp.version": "v1.39.1",
   "omnisharp.trace.server": "information",
-  "omnisharp.debug.server": true
+  "omnisharp.debug.server": true,
+  "languageserver": {
+    "javascript": {
+      "command": "/usr/local/bin/tsserver",
+      "filetypes": [
+        "quorum"
+      ],
+      "initializationOptions": {
+        "quorum": {
+          "stringPartitions": [
+            {
+              "start": "SetScript(\"",
+              "end": "\")",
+              "languageId": "javascript"
+            }
+          ]
+        }
+      }
+    }
+  }
 }

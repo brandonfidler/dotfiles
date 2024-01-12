@@ -16,6 +16,8 @@ return require("packer").startup(function(use)
   use('nvim-telescope/telescope-fzy-native.nvim')
   use('neovim/nvim-lspconfig')
 
+  use('natebosch/vim-lsc')
+
   use('rafamadriz/friendly-snippets')
   use('L3MON4D3/LuaSnip')
 
@@ -81,10 +83,7 @@ return require("packer").startup(function(use)
   }
 
 
-  use({
-    "luukvbaal/statuscol.nvim",
-    config = function() require("statuscol").setup({ setopt = true }) end
-  })
+  -- use("luukvbaal/statuscol.nvim")
 
   use('Quramy/vim-js-pretty-template')
 
