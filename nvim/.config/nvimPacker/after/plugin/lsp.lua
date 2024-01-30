@@ -164,6 +164,9 @@ require 'lspconfig'.pylsp.setup {
   }
 }
 
+require 'lspconfig'.marksman.setup {
+  filetypes = { "markdown", "mdx" },
+}
 require 'lspconfig'.docker_compose_language_service.setup {}
 require 'lspconfig'.dockerls.setup {}
 local ls = require 'luasnip'
@@ -202,7 +205,9 @@ if not configs.fidler_lsp then
     }
   }
 end
+
 configs.fidler_lsp.setup {}
+
 
 require 'lspconfig'.java_language_server.setup(config({
   cmd = { '/Users/brandonfidler/java-language-server/dist/lang_server_mac.sh' },
@@ -224,6 +229,7 @@ require("lspconfig").tsserver.setup(config({
   },
   filetypes = { "javascript", "javascriptreact", "javascript.jsx", "typescript", "typescriptreact", "typescript.tsx" },
 }))
+
 
 require 'lspconfig'.tailwindcss.setup {
   cmd = {

@@ -88,5 +88,13 @@ return require("packer").startup(function(use)
   use('Quramy/vim-js-pretty-template')
 
   use({ 'toppair/peek.nvim', run = 'deno task --quiet build:fast' })
+
+  -- install without yarn or npm
+  use({
+    "iamcco/markdown-preview.nvim",
+    run = function() vim.fn["mkdp#util#install"]() end,
+  })
+
+  use { "ellisonleao/glow.nvim", config = function() require("glow").setup() end }
   use({ 'vim-test/vim-test' })
 end)

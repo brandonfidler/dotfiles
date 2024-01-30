@@ -47,6 +47,3 @@ vim.g.mapleader = " "
 vim.opt.mmp = 2000
 
 vim.opt.foldmarker = "{{{,}}}"
-
--- Set the filetype plugin and indent on in Lua
-vim.cmd([[filetype plugin indent on]])
