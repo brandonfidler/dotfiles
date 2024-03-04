@@ -8,9 +8,10 @@ return {
 				rust = {
 					require("formatter.filetypes.rust").ast_grep,
 				},
-				html = {
-					require("formatter.filetypes.html").html_lsp,
-				},
+				-- html = {
+				-- 	require("formatter.filetypes.html").htmlbeautifier,
+				-- 	require("formatter.filetypes.markdown").prettier,
+				-- },
 				json = {
 					require("formatter.filetypes.json").prettier,
 				},

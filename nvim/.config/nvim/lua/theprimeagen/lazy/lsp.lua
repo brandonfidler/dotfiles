@@ -18,8 +18,15 @@ return {
 		"j-hui/fidget.nvim",
 	},
 	config = function()
-		local capabilities = require("cmp_nvim_lsp").default_capabilities()
-		local lspconfig = require("lspconfig")
+		local cmp = require("cmp")
+		local cmp_lsp = require("cmp_nvim_lsp")
+		local capabilities = vim.tbl_deep_extend(
+			"force",
+			{},
+			vim.lsp.protocol.make_client_capabilities(),
+			cmp_lsp.default_capabilities()
+		)
+		capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 		require("fidget").setup()
 		require("mason").setup()
@@ -29,6 +36,7 @@ return {
 				"lua_ls",
 				--				"rust_analyzer", --taken out for rustaceanvim
 				"tsserver",
+				"angularls",
 				"jsonls",
 				"tailwindcss",
 			},
@@ -39,27 +47,10 @@ return {
 						capabilities = capabilities,
 					})
 				end,
-				["tsserver"] = function()
-					require("lspconfig")["tsserver"].setup({
+				["angularls"] = function()
+					require("lspconfig")["angularls"].setup({
 						capabilities = capabilities,
-						on_attach = function(client)
-							client.resolved_capabilities.document_formatting = false
-							client.resolved_capabilities.document_range_formatting = false
-						end,
-					})
-				end,
-				["html"] = function()
-					require("lspconfig")["html"].setup({
-						capabilities = capabilities,
-						filetypes = { "html", "markdown" },
-						init_options = {
-							configurationSection = { "html", "css", "javascript", "markdown" },
-							embeddedLanguages = {
-								css = true,
-								javascript = true,
-								markdown = true,
-							},
-						},
+						filetypes = { "typescript", "html", "typescriptreact", "typescript.tsx" },
 						root_dir = require("lspconfig").util.root_pattern("package.json", "tsconfig.json", ".git"),
 					})
 				end,
@@ -100,12 +91,13 @@ return {
 					})
 				end,
 				["lua_ls"] = function()
-					capabilities = capabilities
+					local lspconfig = require("lspconfig")
 					lspconfig.lua_ls.setup({
+						capabilities = capabilities,
 						settings = {
 							Lua = {
 								diagnostics = {
-									globals = { "vim" },
+									globals = { "vim", "it", "describe", "before_each", "after_each" },
 								},
 							},
 						},
@@ -114,12 +106,10 @@ return {
 			},
 		})
 
-		local cmp = require("cmp")
 		local cmp_select = { behavior = cmp.SelectBehavior.Select }
 
 		cmp.setup({
 			snippet = {
-				-- REQUIRED - you must specify a snippet engine
 				expand = function(args)
 					require("luasnip").lsp_expand(args.body) -- For `luasnip` users.
 				end,
@@ -162,8 +152,15 @@ return {
 		})
 
 		vim.diagnostic.config({
-			update_in_insert = true,
-			virtual_text = true,
+			-- update_in_insert = true,
+			float = {
+				focusable = false,
+				style = "minimal",
+				border = "rounded",
+				source = "always",
+				header = "",
+				prefix = "",
+			},
 		})
 	end,
 }

@@ -53,25 +53,6 @@ autocmd({ "BufWritePost" }, {
 	end,
 })
 
-vim.api.nvim_create_autocmd("BufWritePre", {
-	pattern = { "*.js", "*.jsx", "*.ts", "*.tsx" },
-	callback = function()
-		-- Save cursor position
-		local save_pos = vim.api.nvim_buf_get_mark(0, '"')
-		-- Run eslint_d with --fix-to-stdout and replace buffer content
-		local eslint_output = vim.fn.system(
-			"eslint_d --stdin --fix-to-stdout --stdin-filename " .. vim.fn.expand("%:p"),
-			vim.api.nvim_buf_get_lines(0, 0, -1, false)
-		)
-		-- Only update buffer if eslint_d succeeded
-		if vim.v.shell_error == 0 then
-			vim.api.nvim_buf_set_lines(0, 0, -1, false, vim.split(eslint_output, "\n"))
-		end
-		-- Restore cursor position
-		vim.api.nvim_win_set_cursor(0, save_pos)
-	end,
-})
-
 autocmd("LspAttach", {
 	group = ThePrimeagenGroup,
 	callback = function(e)
