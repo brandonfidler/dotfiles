@@ -11,7 +11,7 @@ return {
 			css = { "stylelint" },
 			scss = { "stylelint" },
 			markdown = { "markdownlint" },
-			angular = { "dtlint" },
+			angular = { "djlint" },
 		}
 	end,
 }

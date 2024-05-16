@@ -1,6 +1,7 @@
 require("theprimeagen.set")
 require("theprimeagen.remap")
 require("theprimeagen.lazy_init")
+require("theprimeagen.load_test_lsp")
 
 local augroup = vim.api.nvim_create_augroup
 local ThePrimeagenGroup = augroup("ThePrimeagen", {})
@@ -51,6 +52,25 @@ autocmd({ "BufWritePost" }, {
 	callback = function()
 		require("lint").try_lint()
 	end,
+})
+
+-- autocmd BufRead,BufEnter *.component.html set filetype=angular
+
+-- autocmd("BufRead", {
+-- 	pattern = "*.component.html",
+-- 	command = "set filetype=angular",
+-- })
+
+-- autocmd("BufEnter", {
+-- 	pattern = "*.component.html",
+-- 	command = "set filetype=angular",
+-- })
+
+-- autocmd FileType angular setlocal commentstring=<!--%s-->
+
+autocmd("FileType", {
+	pattern = "angular",
+	command = "setlocal commentstring=<!--%s-->",
 })
 
 autocmd("LspAttach", {

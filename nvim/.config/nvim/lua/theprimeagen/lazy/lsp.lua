@@ -39,6 +39,7 @@ return {
 				"angularls",
 				"jsonls",
 				"tailwindcss",
+				"graphql",
 			},
 			automatic_installation = true,
 			handlers = {
@@ -50,7 +51,37 @@ return {
 				["angularls"] = function()
 					require("lspconfig")["angularls"].setup({
 						capabilities = capabilities,
-						filetypes = { "typescript", "html", "typescriptreact", "typescript.tsx" },
+						filetypes = { "typescript", "html", "typescriptreact", "typescript.tsx", "angular" },
+						root_dir = require("lspconfig").util.root_pattern("angular.json", "project.json"),
+					})
+				end,
+				["graphql"] = function()
+					require("lspconfig")["graphql"].setup({
+						capabilities = capabilities,
+						filetypes = { "graphql", "javascript", "typescript", "javascriptreact", "typescriptreact" },
+						root_dir = require("lspconfig").util.root_pattern(
+							".graphqlrc",
+							".graphql.config.json",
+							"package.json",
+							"tsconfig.json",
+							".git"
+						),
+					})
+				end,
+				["html"] = function()
+					require("lspconfig")["html"].setup({
+						capabilities = capabilities,
+						filetypes = { "html", "markdown", "css", "javascript", "typescript", "svelte", "vue" },
+						init_options = {
+							configurationSection = { "html", "css", "javascript", "markdown", "typescript" },
+							embeddedLanguages = {
+								css = true,
+								angular = true,
+								javascript = true,
+								typescript = true,
+								markdown = true,
+							},
+						},
 						root_dir = require("lspconfig").util.root_pattern("package.json", "tsconfig.json", ".git"),
 					})
 				end,

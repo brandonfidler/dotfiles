@@ -50,3 +50,7 @@ vim.opt.foldmarker = "{{{,}}}"
 
 -- Set the filetype plugin and indent on in Lua
 vim.cmd([[filetype plugin indent on]])
+
+-- make this work in lua file
+-- set rtp+=/opt/homebrew/opt/fzf
+vim.opt.rtp:append("/opt/homebrew/opt/fzf")

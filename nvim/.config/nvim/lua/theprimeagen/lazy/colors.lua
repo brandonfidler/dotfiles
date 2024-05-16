@@ -9,6 +9,7 @@ end
 return {
 	{
 		"folke/tokyonight.nvim",
+		priority = 1000,
 		config = function()
 			require("tokyonight").setup({
 				-- your configuration comes here
@@ -25,6 +26,10 @@ return {
 				},
 			})
 		end,
+	},
+	{
+		"catppuccin/nvim",
+		name = "catppuccin",
 	},
 	{
 		"rose-pine/neovim",
