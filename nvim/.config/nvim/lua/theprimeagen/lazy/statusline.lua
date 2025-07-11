@@ -1,10 +1,13 @@
+local is_light = io.popen("defaults read -g AppleInterfaceStyle 2>/dev/null"):read("*a")
+vim.is_light_mode = is_light:match("Dark") == nil
 return {
 	"nvim-lualine/lualine.nvim",
 	dependencies = { "kyazdani42/nvim-web-devicons" },
 	config = function()
+		print("Loading lualine")
 		require("lualine").setup({
 			options = {
-				theme = "tokyonight",
+				theme = vim.g.theme,
 				section_separators = { left = "", right = "" },
 				component_separators = { left = "", right = "" },
 			},

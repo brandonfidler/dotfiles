@@ -34,8 +34,9 @@ return {
 			ensure_installed = {
 				"html",
 				"lua_ls",
+				"mdx_analyzer",
 				--				"rust_analyzer", --taken out for rustaceanvim
-				"tsserver",
+				"ts_ls",
 				"angularls",
 				"jsonls",
 				"tailwindcss",
@@ -55,6 +56,28 @@ return {
 						root_dir = require("lspconfig").util.root_pattern("angular.json", "project.json"),
 					})
 				end,
+				["csharp_ls"] = function()
+					require("lspconfig")["csharp_ls"].setup({
+						capabilities = capabilities,
+						filetypes = { "csharp" },
+						root_dir = require("lspconfig").util.root_pattern("*.sln"),
+					})
+				end,
+				["ts_ls"] = function()
+					require("lspconfig")["ts_ls"].setup({
+						capabilities = capabilities,
+						filetypes = {
+							"typescript",
+							"typescriptreact",
+							"typescript.tsx",
+							"markdown",
+							"markdown.mdx",
+							"javascript",
+							"javascriptreact",
+						},
+						root_dir = require("lspconfig").util.root_pattern("tsconfig.json", "jsconfig.json", ".git"),
+					})
+				end,
 				["graphql"] = function()
 					require("lspconfig")["graphql"].setup({
 						capabilities = capabilities,
@@ -66,6 +89,17 @@ return {
 							"tsconfig.json",
 							".git"
 						),
+					})
+				end,
+				["mdx_analyzer"] = function()
+					require("lspconfig")["mdx_analyzer"].setup({
+						capabilities = capabilities,
+						filetypes = { "markdown", "markdown.mdx" },
+						typescript = {
+							tsconfig = "tsconfig.json",
+							filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+						},
+						root_dir = require("lspconfig").util.root_pattern("package.json", "tsconfig.json", ".git"),
 					})
 				end,
 				["html"] = function()
@@ -85,11 +119,9 @@ return {
 						root_dir = require("lspconfig").util.root_pattern("package.json", "tsconfig.json", ".git"),
 					})
 				end,
-
-				["tailwindcss"] = function()
-					require("lspconfig")["tailwindcss"].setup({
+				["cssls"] = function()
+					require("lspconfig")["cssls"].setup({
 						capabilities = capabilities,
-						cmd = { "tailwindcss-language-server", "--stdio" },
 						filetypes = {
 							"css",
 							"scss",
@@ -103,6 +135,73 @@ return {
 							"svelte",
 							"vue",
 							"rust",
+						},
+						root_dir = require("lspconfig").util.root_pattern(
+							"tailwind.config.js",
+							"tailwind.config.ts",
+							"postcss.config.js",
+							"postcss.config.ts",
+							"windi.config.ts"
+						),
+						settings = {
+							css = {
+								validate = true,
+								lint = {
+									unknownAtRules = "ignore",
+								},
+							},
+							scss = {
+								validate = true,
+								lint = {
+									unknownAtRules = "ignore",
+								},
+							},
+							less = {
+								validate = true,
+								lint = {
+									unknownAtRules = "ignore",
+								},
+							},
+							postcss = {
+								validate = true,
+								lint = {
+									unknownAtRules = "ignore",
+								},
+							},
+							stylus = {
+								validate = true,
+								lint = {
+									unknownAtRules = "ignore",
+								},
+							},
+						},
+					})
+				end,
+
+				["tailwindcss"] = function()
+					require("lspconfig")["tailwindcss"].setup({
+						capabilities = capabilities,
+						cmd = {
+							"node",
+							"/Users/brandonfidler/personal/tailwindcss-intellisense/packages/tailwindcss-language-server/bin/tailwindcss-language-server",
+							"--stdio",
+						},
+						filetypes = {
+							"css",
+							"scss",
+							"sass",
+							"postcss",
+							"html",
+							"javascript",
+							"javascriptreact",
+							"typescript",
+							"typescriptreact",
+							"svelte",
+							"vue",
+							"rust",
+						},
+						lint = {
+							invalidApply = "error",
 						},
 						init_options = {
 							-- There you can set languages to be considered as different ones
@@ -129,6 +228,14 @@ return {
 							Lua = {
 								diagnostics = {
 									globals = { "vim", "it", "describe", "before_each", "after_each" },
+								},
+								workspace = {
+									-- Make the server aware of Neovim runtime files
+									library = vim.api.nvim_get_runtime_file("", true),
+								},
+								-- Do not send telemetry data containing a randomized but unique identifier
+								telemetry = {
+									enable = false,
 								},
 							},
 						},
@@ -181,7 +288,6 @@ return {
 				{ name = "buffer" },
 			},
 		})
-
 		vim.diagnostic.config({
 			-- update_in_insert = true,
 			float = {

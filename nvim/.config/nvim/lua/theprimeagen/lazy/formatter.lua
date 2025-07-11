@@ -30,8 +30,17 @@ return {
 				typescript = {
 					require("formatter.filetypes.typescript").prettier,
 				},
+				typescriptreact = {
+					require("formatter.filetypes.typescript").prettier,
+				},
+				javascriptreact = {
+					require("formatter.filetypes.javascript").prettier,
+				},
 				lua = {
 					require("formatter.filetypes.lua").stylua,
+				},
+				html = {
+					require("formatter.filetypes.html").prettier,
 				},
 				["*"] = {
 					require("formatter.filetypes.any").remove_trailing_whitespace,

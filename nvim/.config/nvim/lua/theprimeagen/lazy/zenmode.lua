@@ -1,32 +1,35 @@
 return {
 	"folke/zen-mode.nvim",
+	dependencies = { "folke/twilight.nvim" }, -- Add twilight.nvim
 	config = function()
-		vim.keymap.set("n", "<leader>zz", function()
-			require("zen-mode").setup({
-				window = {
-					width = 90,
-					options = {},
+		require("zen-mode").setup({
+			window = {
+				options = {},
+			},
+			plugins = {
+				wezterm = {
+					enabled = true,
+					font = "+6",
 				},
-			})
-			require("zen-mode").toggle()
-			vim.wo.wrap = false
-			vim.wo.number = true
-			vim.wo.rnu = true
-			ColorMyPencils()
-		end)
+				twilight = { enabled = true }, -- Enable twilight integration
+			},
+		})
 
-		vim.keymap.set("n", "<leader>zZ", function()
-			require("zen-mode").setup({
-				window = {
-					width = 80,
-					options = {},
-				},
-			})
+		vim.keymap.set("n", "<leader>zz", function()
+			local minimal = vim.v.count > 0
+
 			require("zen-mode").toggle()
 			vim.wo.wrap = false
-			vim.wo.number = false
-			vim.wo.rnu = false
-			vim.opt.colorcolumn = "0"
+
+			if minimal then
+				vim.wo.number = false
+				vim.wo.rnu = false
+				vim.opt.colorcolumn = "0"
+			else
+				vim.wo.number = true
+				vim.wo.rnu = true
+			end
+
 			ColorMyPencils()
 		end)
 	end,

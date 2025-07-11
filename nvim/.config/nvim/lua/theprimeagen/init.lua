@@ -95,9 +95,9 @@ autocmd("LspAttach", {
 		vim.keymap.set("n", "<leader>vrr", function()
 			vim.lsp.buf.references()
 		end, opts)
-		vim.keymap.set("n", "<leader>vrn", function()
-			vim.lsp.buf.rename()
-		end, opts)
+		-- vim.keymap.set("n", "<leader>vrn", function()
+		-- 	vim.lsp.buf.rename()
+		-- end, opts)
 		vim.keymap.set("n", "<C-h>", function()
 			vim.lsp.buf.signature_help()
 		end, opts)
@@ -111,8 +111,25 @@ autocmd("LspAttach", {
 	end,
 })
 
-vim.g.netrw_banner = 0
-vim.g.netrw_browser_split = 0
-vim.g.netrw_winsize = 25
+-- I need to make mdx files show up as markdown.mdx files
 
-ColorMyPencils("tokyonight")
+vim.cmd("au BufRead,BufNewFile *.mdx set filetype=markdown.mdx")
+
+-- if in dark mode use tokyonight otherwise use gruvbox light
+local function set_theme()
+	if vim.is_light_mode then
+		vim.cmd("set background=light")
+		vim.g.theme = "catppuccino"
+		ColorMyPencils("catppuccin")
+	else
+		vim.cmd("set background=dark")
+		vim.g.theme = "tokyonight"
+		ColorMyPencils("tokyonight")
+	end
+end
+
+-- Call the function to set the theme
+set_theme()
+
+-- Ensure termguicolors is enabled if not already
+vim.opt.termguicolors = true

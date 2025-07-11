@@ -1,7 +1,10 @@
 return {
 	"nvim-treesitter/nvim-treesitter",
 	build = ":TSUpdate",
-	tag = "v0.9.2",
+	tag = "v0.9.3",
+	dependencies = {
+		"andymass/vim-matchup", -- Added vim-matchup dependency
+	},
 	config = function()
 		require("nvim-treesitter.configs").setup({
 			ensure_installed = { "vimdoc", "javascript", "typescript", "c", "lua", "rust", "html", "jsdoc", "bash" },
@@ -13,6 +16,13 @@ return {
 			highlight = {
 				enable = true,
 				additional_vim_regex_highlighting = { "markdown" },
+			},
+			context_commentstring = {
+				enable = true,
+				enable_autocmd = false,
+			},
+			matchup = {
+				enable = true,
 			},
 		})
 

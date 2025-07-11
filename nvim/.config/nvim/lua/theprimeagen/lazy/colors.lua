@@ -1,4 +1,4 @@
-function ColorMyPencils(color)
+_G.ColorMyPencils = function(color)
 	color = color or "rose-pine"
 	vim.cmd.colorscheme(color)
 
@@ -39,7 +39,12 @@ return {
 			require("rose-pine").setup({
 				disable_background = true,
 			})
-			ColorMyPencils()
+			_G.ColorMyPencils()
 		end,
 	},
+	--add gruvbox-light
+	{
+		"ellisonleao/gruvbox.nvim",
+	},
+	{ "catppuccin/nvim", name = "catppuccin", priority = 1000 },
 }
